@@ -5,6 +5,7 @@ A machine learning project to classify human emotions from voice using audio sig
 - Happy
 - Neutral
 - Sad
+- Disgust
 
 ## 🛠️ Tech Stack
 - Python, TensorFlow
