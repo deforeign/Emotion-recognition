@@ -3,7 +3,10 @@ import numpy as np
 import os
 from src.extract_features import extract_mfcc
 
-EMOTIONS = ['angry', 'happy', 'neutral', 'sad']
+# Supported CREMA-D emotions
+EMOTIONS = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad']  
+
+
 
 le = LabelEncoder()
 le.fit(EMOTIONS)
@@ -18,14 +21,18 @@ def load_data(data_dir):
                     feature = extract_mfcc(os.path.join(root, file))
                     X.append(feature)
                     y.append(label)
+    if not X:
+        print(f"[ERROR] No valid .wav files found in {data_dir}.")
+    else:
+        print(f"[INFO] Loaded {len(X)} samples.")
     return np.array(X), le.transform(y)
 
+
 def get_label_from_filename(filename):
-    # Example for RAVDESS: filename format -> '03-01-05-01-02-01-12.wav'
-    emo_map = {'01': 'neutral', '02': 'calm', '03': 'happy', '04': 'sad', '05': 'angry',
-               '06': 'fearful', '07': 'disgust', '08': 'surprised'}
-    emotion_id = filename.split("-")[2]
-    return emo_map.get(emotion_id, 'unknown')
+    # TESS filename format: OAF_back_angry.wav
+    emotion = filename.split('_')[-1].split('.')[0].lower()
+    return emotion if emotion in EMOTIONS else 'unknown'
+
 
 
 def decode_label(label_index):

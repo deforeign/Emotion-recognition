@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from utils import load_data
 
 # Load and split data
-X, y = load_data("data/RAVDESS")
+X, y = load_data("data")
 y_cat = to_categorical(y)
 X_train, X_test, y_train, y_test = train_test_split(X, y_cat, test_size=0.2, random_state=42)
 
@@ -14,7 +14,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y_cat, test_size=0.2, ran
 model = Sequential([
     Dense(256, activation='relu', input_shape=(X.shape[1],)),
     Dense(128, activation='relu'),
-    Dense(4, activation='softmax')
+    Dense(6, activation='softmax')  # 6 emotions in CREMA-D
 ])
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])

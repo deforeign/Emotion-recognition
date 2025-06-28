@@ -1,12 +1,6 @@
 import streamlit as st
 import soundfile as sf
-
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from src.predict import predict_emotion
-
 
 st.set_page_config(page_title="Voice Emotion Detector", layout="centered")
 st.title("🎙️ Voice Emotion Detector")
@@ -19,4 +13,3 @@ if uploaded_file is not None:
         f.write(uploaded_file.read())
     emotion = predict_emotion("temp.wav")
     st.success(f"Predicted Emotion: **{emotion.upper()}**")
-
